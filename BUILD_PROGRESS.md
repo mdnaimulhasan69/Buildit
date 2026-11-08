@@ -10,6 +10,7 @@
 | H1 | Done | Home page with 3D hero, template ring, showcase, team and university sections | Checked in a test browser at desktop and phone size. Not run against the real packages in this sandbox, so the first Render build is the first real run. |
 | H2 | Done | Showcase: 7 demo sites, one for each template, owned by the 4 team accounts | The accounts and sites are created on server start. The accounts cannot log in. Forms in the demos do nothing on purpose. |
 | H3 | Partly | `/p/ADDRESS` public pages (part of 4A) | Works for the 7 demos and for any project that is published and public in the database. No Publish button yet. Forms on these pages send nothing yet. |
+| H4 | Done | v2.1: the top of the home page fits laptop screens, the Templates page opens at once without waiting for the server, `.npmrc` for the npm version conflict | Checked at 54 screen sizes in a test browser. The Templates page was tested against a server that never answers. |
 | 3A | Not Built | Teams and Roles | Next to build: Teams creation, host handover, member invitations up to 10, editor/viewer roles, project sharing. |
 | 3B | Not Built | Real-Time Live Editing | Multi-user live editing on canvas, cursors, presence awareness, max 5 editors. |
 | 3C | Not Built | Chat, DMs & Notifications | In-editor project chat, direct messaging, notification bell with auto-refresh, 20 msg/min limit. |

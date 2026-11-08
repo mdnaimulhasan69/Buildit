@@ -32,6 +32,7 @@ The application reads its settings from environment variables:
    ```bash
    npm install
    ```
+   The file `.npmrc` (`legacy-peer-deps=true`) is part of the project. It stops npm from failing on a version conflict between Vite and its plugins. If you install without that file, run `npm install --legacy-peer-deps`.
 
 2. Start the development server:
    ```bash

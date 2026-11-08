@@ -34,6 +34,9 @@ Later, when you get a new ZIP from me, repeat steps 2 to 4 with the new files. F
 | `JWT_SECRET` | any long random text of 40 or more characters |
 | `PAYMENT_MODE` | `sandbox` |
 | `NODE_VERSION` | `22` |
+| `NPM_CONFIG_LEGACY_PEER_DEPS` | `true` |
+
+   `NPM_CONFIG_LEGACY_PEER_DEPS` is needed because npm reports a version conflict between Vite and its plugins. Without it the first build stops with an `ERESOLVE` error. (The project also contains an `.npmrc` file with the same setting. Files that start with a dot are skipped by the GitHub upload page, so the variable is the safe way.)
 
    Optional now: `ADMIN_EMAIL` (your own email). Leave the Google, SSLCommerz and email variables out for now.
 5. Open **Advanced**, set **Health Check Path** to `/healthz`.
@@ -50,6 +53,15 @@ Later, when you get a new ZIP from me, repeat steps 2 to 4 with the new files. F
 2. Click **Add file**, then **Upload files**. Drop four photos named `naimul.jpg`, `tohidul.jpg`, `chirananda.jpg` and `saifulla.jpg`.
 3. Click **Commit changes**. Render updates the site in a few minutes.
 4. Your own passion lines are in `src/lib/siteData.ts` (the `TEAM` list). Open the file on GitHub, click the pencil, change the `passion` text of each member and commit.
+
+## Keep the free site awake (do this before the presentation)
+
+A free Render service goes to sleep after 15 minutes without visitors. The next visitor then waits a minute or more. To avoid that, let a free monitoring service open your site every 5 minutes:
+
+1. Make a free account at https://uptimerobot.com (no card is needed).
+2. Add a new monitor: type **HTTP(s)**, any name (for example `BuildIt`), URL `https://YOUR-NAME.onrender.com/healthz`, check every **5 minutes**. Save it.
+
+Use `/healthz` and not `/api/health`. `/healthz` does not touch the database, so the Neon database can still rest between real visits and keeps its free hours.
 
 ## Good to know
 - If you register on the site, do not choose a user name that starts with `team_`. Those belong to the four team accounts, which cannot log in.

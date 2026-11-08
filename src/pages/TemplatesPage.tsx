@@ -13,16 +13,18 @@ export const TemplatesPage: React.FC<TemplatesPageProps> = ({ navigate }) => {
   const { user } = useAuth();
   const { showSuccess, showError } = useAlert();
 
-  const [templatesList, setTemplatesList] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  // The seven starter templates are part of the app, so the gallery opens at once.
+  // The server list is added when it arrives, so a sleeping or slow server never blocks the page.
+  const [templatesList, setTemplatesList] = useState<any[]>(() => [...STARTER_TEMPLATES]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [cloningId, setCloningId] = useState<string | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
     const load = async () => {
-      setLoading(true);
       const apiTemplates = await fetchTemplates();
+      if (cancelled) return;
       // Combine API templates with STARTER_TEMPLATES to ensure all 7 are present with their full SVGs
       const combined = [...STARTER_TEMPLATES];
       for (const t of apiTemplates) {
@@ -40,9 +42,11 @@ export const TemplatesPage: React.FC<TemplatesPageProps> = ({ navigate }) => {
         }
       }
       setTemplatesList(combined);
-      setLoading(false);
     };
     load();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const categories = ['All', 'Forms & Registration', 'Forms & Surveys', 'Events & Programs', 'Bookings & Schedule', 'Portfolios'];
@@ -124,11 +128,7 @@ export const TemplatesPage: React.FC<TemplatesPageProps> = ({ navigate }) => {
       </div>
 
       {/* Templates Grid */}
-      {loading ? (
-        <div className="py-20 flex justify-center items-center">
-          <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-        </div>
-      ) : filteredTemplates.length === 0 ? (
+      {filteredTemplates.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-200 p-12 text-center text-gray-500">
           <p className="text-base font-semibold">No templates found matching your search</p>
           <button
